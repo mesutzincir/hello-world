@@ -18,3 +18,16 @@ git add test.txt
 git status
 git commit -m "add new commands"
 git push
+#show branches, green one is active
+git branch
+#create ne branch
+git branch new_branch_name
+git branch
+# switch to branch
+git checkout new_branch_name
+# make some changes and add
+git status
+git add test.txt
+git commit -m "add branch commands"
+#push branch new_branch_name to gitHub
+git push origin new_branch_name
