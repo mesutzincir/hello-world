@@ -13,3 +13,8 @@ git commit -m "our comments : local repository commit"
 git push 
 # change someting and show differance
 git diff
+# add changes to index to commit
+git add test.txt
+git status
+git commit -m "add new commands"
+git push
