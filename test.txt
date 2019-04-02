@@ -1,1 +1,15 @@
 hello gitHub.
+git help
+git clone https://github.com/mesutzincir/hello-world.git
+git status
+git add test.txt
+git status
+git config --global user.email "email@gmail.com"
+git config --global user.name "your name"
+
+git commit -m "our comments : local repository commit"
+
+#send the change remote repository
+git push 
+# change someting and show differance
+git diff
