@@ -31,3 +31,15 @@ git add test.txt
 git commit -m "add branch commands"
 #push branch new_branch_name to gitHub
 git push origin new_branch_name
+
+git branch #make sure we are on new_branch_name
+git fetch origin
+git checkout -b new_branch_name origin/new_branch_name
+get merge master
+get checkout master
+get branch
+git merge --no-ff new_branch_name
+git push origin master
+
+#delete branch
+git branch new_branch_name -D
