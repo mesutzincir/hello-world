@@ -1,0 +1,78 @@
+docker run --name some-postgres -e POSTGRES_PASSWORD=1234 -e POSTGRES_USER=mz -e POSTGRES_DB=testsdb -d postgres
+or using file 
+docker run --name some-postgres -e POSTGRES_PASSWORD_FILE=/run/secrets/postgres-passwd -d postgres
+
+run contaner with name=some-postgres password=1234 from postgres image
+docker run --name some-postgres -e POSTGRES_PASSWORD=1234  -d postgres
+connect psql console user=postgres
+ docker exec -it some-postgres psql -U postgres
+
+ postgres=# CREATE DATABASE db_test1;
+CREATE DATABASE
+postgres=# \c db_test1;
+You are now connected to database "db_test1" as user "postgres".
+db_test1=# CREATE table demo_t(id int);
+CREATE TABLE
+db_test1=# insert into demo_t values(12);
+INSERT 0 1
+db_test1=# select * from demo_t;
+ id
+----
+ 12
+(1 row)
+
+db_test1=# \dt
+         List of relations
+ Schema |  Name  | Type  |  Owner
+--------+--------+-------+----------
+ public | demo_t | table | postgres
+(1 row)
+
+db_test1=# \q
+
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+8b3a522570de        postgres            "docker-entrypoint.s…"   27 minutes ago      Up 27 minutes       5432/tcp            some-postgres
+$ docker rm -f some-postgres
+some-postgres
+$
+$ ls
+postgres_create_table.sql
+$ cat postgres_create_table.sql
+\c db_test1;
+CREATE TABLE demo_t(id int);
+insert into demo_t values(1);
+$ \q
+
+-----remove image--------
+$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+postgres            latest              9c116111eb08        3 weeks ago         312MB
+$ docker image rm -f postgres
+Untagged: postgres:latest
+Untagged: postgres@sha256:e002abfaf7b0f1015b7510f66b709e2bacbecc7762c428634c27a3c5e58ffbae
+Deleted: sha256:9c116111eb0806d217a0ce565dfbf4e2ed0dcde13976a7ed61e5ba60b269a5a8
+Deleted: sha256:e679b49ee4d0ecc8272ddd8429f71de462aaf1bfeeaca4ddbac70e366fbd40e4
+Deleted: sha256:aac468b8609aba4bb0d8a9db75128b132a44a6c9ea3f65281ebbb10d3a6fe642
+
+$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+$
+
+
+OPTION 1: Run Postgres using a single Docker command
+Run a postgres container
+uses the official docker postgres 11 image
+uses a volume named my_dbdata to store postgres data
+exposes port 54320 to the host
+sets the container name to my_postgres
+uses the -d flag to run in the background
+$ docker run -d --name my_postgres -v my_dbdata:/var/lib/postgresql/data -p 54320:5432 postgres:11
+
+
+$ docker run -d --name container_name -v dbname_volume_data:/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_PASSWORD=1234 -e POSTGRES_USER=username -e POSTGRES_DB=dbname postgres:11
+750eacedabed2ff88da408b3caebc77b5c2d7e9b07e281d860e7e8f9f523fe1c
+$ docker ps
+$ docker volume ls
